@@ -22,32 +22,32 @@
 // решение задачи заняло 50 минут.
 const ADMIN_LOGIN = 'admin';
 const ADMIN_PASSWORD = 'm4ngo1zh4ackz0r';
-let userInputLogin = prompt('Для авторизации введите логин'); 
+let userInputLogin = prompt('Для авторизации введите логин');
 let userClickCansel = 'Отменено пользователем!';
 let userDeprikated = 'Доступ запрещен!';
 let userIsLogined = 'Добро пожаловать!';
 let userInputPassword;
 
-if(userInputLogin !== null){
-   
-   if(userInputLogin === ADMIN_LOGIN){
+if (userInputLogin !== null) {
+
+    if (userInputLogin === ADMIN_LOGIN) {
         userInputPassword = prompt('Введите пароль');
-        if(userInputPassword === ADMIN_PASSWORD){
+        if (userInputPassword === ADMIN_PASSWORD) {
             alert(userIsLogined);
             console.log('Пользователь залогинелся успешно');
-        }else{
+        } else {
             alert(userDeprikated);
             console.log('Пользователь ошибся в пароле');
         }
-    }else{
+    } else {
         alert(userDeprikated);
         console.log('Пользователь ошибся в логине');
     }
-}else{
+} else {
     alert(userClickCansel);
     console.log('Пользователь нажал отмену');
 }
- 
+
 /*
   ⚠️ ДОПОЛНИТЕЛЬНОЕ ЗАДАНИЕ - ВЫПОЛНЯТЬ ПО ЖЕЛАНИЮ
   
@@ -82,44 +82,35 @@ const TABA_PLACES = 6;
 let inputNumberOfPlaces = prompt('Введите необходимое число мест');
 let isAgree;
 
-if(inputNumberOfPlaces !== null && inputNumberOfPlaces.indexOf('.') < 0){
+if (inputNumberOfPlaces !== null && inputNumberOfPlaces.indexOf('.') < 0) {
     inputNumberOfPlaces = Number(inputNumberOfPlaces);
-    if(!isNaN(inputNumberOfPlaces) && inputNumberOfPlaces > 0);{
-        if(inputNumberOfPlaces <= TABA_PLACES){
+    if (!isNaN(inputNumberOfPlaces) && inputNumberOfPlaces > 0); {
+        if (inputNumberOfPlaces <= TABA_PLACES) {
             isAgree = confirm(`Такое количество мест есть в группе ${TABA}. Вы согласны лететь в этой группе?`);
-            if(isAgree){
+            if (isAgree) {
                 alert(`Приятного путешествия в группе ${TABA}`);
-            }
-            else{
+            } else {
                 alert('Нам очень жаль, приходите еще!');
             }
-        }
-        else if(inputNumberOfPlaces <= SHARM_PLACES){
+        } else if (inputNumberOfPlaces <= SHARM_PLACES) {
             isAgree = confirm(`Такое количество мест есть в группе ${SHARM}. Вы согласны лететь в этой группе?`);
-            if(isAgree){
+            if (isAgree) {
                 alert(`Приятного путешествия в группе ${SHARM}`);
-            }
-            else{
+            } else {
                 alert('Нам очень жаль, приходите еще!');
             }
-        }
-        else if(inputNumberOfPlaces <=HURGADA_PLACES){
+        } else if (inputNumberOfPlaces <= HURGADA_PLACES) {
             isAgree = confirm(`Такое количество мест есть в группе ${HURGADA}. Вы согласны лететь в этой группе?`);
-            if(isAgree){
+            if (isAgree) {
                 alert(`Приятного путешествия в группе ${HURGADA}`);
-            }
-            else{
+            } 
+            else {
                 alert('Нам очень жаль, приходите еще!');
             }
-        }
-        else{
+        } else {
             alert('Извините, столько мест нет ни в одной группе!');
         }
     }
-}
-else{
+} else {
     alert("Ошибка ввода");
 }
-
-
-

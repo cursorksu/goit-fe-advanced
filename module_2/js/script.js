@@ -78,6 +78,9 @@ do {
   if (passwords.includes(userPassword)) {
     alert('Добро пожаловать!');
     break;
+  } else if (userPassword === null) {
+    attempts = 3;
+    userPassword = prompt(`Сосредоточьтесь и введите пароль`);
   } else {
     attempts = attempts - 1;
     if (attempts !== 0) {

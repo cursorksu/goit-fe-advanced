@@ -109,11 +109,10 @@ console.log('==== task 6 ====');
 */
 
 let yearNow = prompt('Какой сейчас год?');
-    yearNow = Number(yearNow);
-if(yearNow === 2018){
+yearNow = Number(yearNow);
+if (yearNow === 2018) {
     alert(`Все верно!`);
-}
-else {
+} else {
     alert(`Но ведь на вдоре 2018!`);
 }
 
@@ -135,18 +134,18 @@ console.log('==== task 7 ====');
 let anyNumber = prompt('Введите произвольное целое число?');
 let isFloatElement = anyNumber.indexOf('.') < 0;
 
-if(anyNumber !== null) {                                // если не нажали отмену
-    anyNumber = Number(anyNumber);                      // преобразуй к числу то что ввели
+if (anyNumber !== null) { // если не нажали отмену
+    anyNumber = Number(anyNumber); // преобразуй к числу то что ввели
 
-    if(!isNaN(anyNumber) && isFloatElement) {           // если тип - число и не содержит запятой
-        alert(`Спасибо!`);                              // благодарит
-    }else if (isNaN(anyNumber)) {
-        alert(`Необходимо было ввести число!`);         // ругается
-    }else{
-        alert(`Необходимо было ввести целое число!`);   // ругается
+    if (!isNaN(anyNumber) && isFloatElement) { // если тип - число и не содержит запятой
+        alert(`Спасибо!`); // благодарит
+    } else if (isNaN(anyNumber)) {
+        alert(`Необходимо было ввести число!`); // ругается
+    } else {
+        alert(`Необходимо было ввести целое число!`); // ругается
     }
 
-} else{                                                 // при отмене -  прощается
+} else { // при отмене -  прощается
     alert(`Приходите еще!`);
 }
 
@@ -167,7 +166,7 @@ const num = Number.parseInt(Math.random() * 100);
 
 let type;
 
-type = (num%2 === 0)?'even':'odd';
+type = (num % 2 === 0) ? 'even' : 'odd';
 
 console.log(`${num} is ${type}`);
 
@@ -195,14 +194,14 @@ let hours = 7;
 let minutes = 3;
 let seconds = 42;
 
-if(String(hours).length < 2){
+if (String(hours).length < 2) {
     hours = '0' + hours
 
 }
-if(String(minutes).length < 2){
+if (String(minutes).length < 2) {
     minutes = '0' + minutes
 }
-if(String(seconds).length < 2){
+if (String(seconds).length < 2) {
     seconds = '0' + seconds
 }
 const time = `${hours}:${minutes}:${seconds}`;
@@ -235,36 +234,35 @@ console.log('==== task 10 ====');
     5 - "Каталог лучших отелей"
 */
 let hotel = prompt(`Введите число от одного до пяти`);
-if(hotel !== null) {
+if (hotel !== null) {
     let isHotelFloatElement = hotel.indexOf('.') < 0;
     hotel = Number(hotel);
 
-    if(isHotelFloatElement && !isNaN(hotel)) {
+    if (isHotelFloatElement && !isNaN(hotel)) {
         if (1 <= hotel <= 5) {
             switch (hotel) {
-                case 1:// if (x === 'value1')
+                case 1: // if (x === 'value1')
                     alert(` 1 - "Каталог хостелов"`);
                     break;
-                case 2:// if (x === 'value2')
+                case 2: // if (x === 'value2')
                     alert(`2 - "Каталог бюджетных отелей"`);
                     break;
-                case 3:// if (x === 'value3')
+                case 3: // if (x === 'value3')
                     alert(`3 - "Каталог отелей ***"`);
                     break;
-                case 4:// if (x === 'value4')
+                case 4: // if (x === 'value4')
                     alert(`4 - "Каталог отелей ****"`);
                     break;
-                case 5:// if (x === 'value5')
+                case 5: // if (x === 'value5')
                     alert(`5 - "Каталог лучших отелей"`);
             }
         } else {
             alert(`Необходимо было ввести число oт 1 до 5!`);
         }
-    }else {
+    } else {
         alert(`Необходимо было ввести целое число oт 1 до 5 без буквенных значений!`);
     }
-}
-else{
+} else {
     alert(`Очень жаль, приходите еще!`);
 }
 
