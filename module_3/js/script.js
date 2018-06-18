@@ -36,11 +36,9 @@ do {
     }
   }
 } while (userInput !== null);
-
 if (numbers.length > 0) {
-  console.log(numbers);
-  for (let item of numbers) {
-    total = total + item;
+  for (let i = 0; i < numbers.length; i += 1) {
+    total = total + numbers[i];
   }
   console.log(`Общая сумма чисел равна ${total}`)
 }
@@ -81,7 +79,8 @@ do {
     alert('Добро пожаловать!');
     break;
   } else if (userPassword === null) {
-    break
+    attempts = 3;
+    userPassword = prompt(`Сосредоточьтесь и введите пароль`);
   } else {
     attempts = attempts - 1;
     if (attempts !== 0) {
