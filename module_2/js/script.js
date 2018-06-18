@@ -38,7 +38,6 @@ do {
 } while (userInput !== null);
 
 if (numbers.length > 0) {
-  console.log(numbers);
   for (let item of numbers) {
     total = total + item;
   }
