@@ -8,20 +8,20 @@
   строку "Even" если число четное и строку "Odd" если не четное.
 */
 const checkNumberType = (num) => {
-    if(num%2 === 0){
+    if (num % 2 === 0) {
         console.log('Even');
-    }else{
+    } else {
         console.log('Odd');
     }
 }
 // Вызовы функции для проверки
-console.log( checkNumberType(2) ); // 'Even'
+console.log(checkNumberType(2)); // 'Even'
 
-console.log( checkNumberType(46) ); // 'Even'
+console.log(checkNumberType(46)); // 'Even'
 
-console.log( checkNumberType(3) ); // 'Odd'
+console.log(checkNumberType(3)); // 'Odd'
 
-console.log( checkNumberType(17) ); // 'Odd'
+console.log(checkNumberType(17)); // 'Odd'
 // в консоль выводится нужное значение 
 //и результат возврата функции "undefined"??? Какого??
 // http://prntscr.com/jv863m
@@ -37,7 +37,7 @@ console.log('==== task 2 ====');
     символов и добавляет в конец строки троеточие '...', после чего 
     возвращает укороченную версию.
 */
-/*const limitLenth = +(prompt('Введите число символов, до которого следует обрезать строку'));
+const limitLenth = +(prompt('Введите число символов, до которого следует обрезать строку'));
 const inputString = prompt('Введите строку произвольной длины');
 const formatString = (str) =>{
     if(str.length <= limitLenth){
@@ -58,7 +58,7 @@ console.log( formatString('Get best sale offers now!') ); // true
 
 console.log( formatString('[SPAM] How to earn fast money?') ); // true
 
-console.log( formatString(inputString) ); // true*/
+console.log( formatString(inputString) ); // true
 
 // ===================================== task 3 =============================
 console.log('==== task 3 ====');
@@ -75,21 +75,21 @@ console.log('==== task 3 ====');
   PS: слова могут быть в произвольном регистре
 */
 const checkForSpam = (str) => {
-str = str.toLowerCase(); // a вот тут переписалась переменная?
-    if(str.includes('spam')||str.includes('sale')){
+    str = str.toLowerCase(); // a вот тут переписалась переменная?
+    if (str.includes('spam') || str.includes('sale')) {
         return true;
-    }else{
+    } else {
         return false;
     }
 };
 // Вызовы функции для проверки
-console.log( checkForSpam('Latest technology news') ); // false
+console.log(checkForSpam('Latest technology news')); // false
 
-console.log( checkForSpam('JavaScript weekly newsletter') ); // false
+console.log(checkForSpam('JavaScript weekly newsletter')); // false
 
-console.log( checkForSpam('Get best sale offers now!') ); // true
+console.log(checkForSpam('Get best sale offers now!')); // true
 
-console.log( checkForSpam('[SPAM] How to earn fast money?') ); // true
+console.log(checkForSpam('[SPAM] How to earn fast money?')); // true
 
 
 
@@ -107,22 +107,22 @@ console.log('==== task 4 ====');
 */
 
 const getPx = (str) => {
-    if(typeof str === 'string'){
-        let srtNum = parseFloat(str);// Почему у меня не получилось 
-                                    //перезаписать переменную str -- 
-                                    //Это свойство параметров такое???
+    if (typeof str === 'string') {
+        let srtNum = parseFloat(str); // Почему у меня не получилось 
+        //перезаписать переменную str -- 
+        //Это свойство параметров такое???
         return srtNum;
-    }else{
+    } else {
         return false
     }
 };
 
 // Вызовы функции для проверки
-console.log( getPx("10px") === 10 ); // должно быть:  true
-console.log( getPx("10.5") === 10.5 ); // должно быть:  true
-console.log( getPx("0") === 0 ); // должно быть:  true
-console.log( getPx(-1) ); // должно быть:  null
-console.log( getPx(10) ); // должно быть:  null
+console.log(getPx("10px") === 10); // должно быть:  true
+console.log(getPx("10.5") === 10.5); // должно быть:  true
+console.log(getPx("0") === 0); // должно быть:  true
+console.log(getPx(-1)); // должно быть:  null
+console.log(getPx(10)); // должно быть:  null
 
 // ===================================== task 5 =============================
 console.log('==== task 5 ====');
@@ -140,13 +140,12 @@ const findLongestWord = (str) => {
     const strArray = str.split(' ');
     let maxLength = 0;
     let longestItem;
-    for(let i = 0; i < strArray.length; i += 1){
+    for (let i = 0; i < strArray.length; i += 1) {
         let itemLenth = strArray[i].length;
-        if(maxLength < strArray[i].length){
+        if (maxLength < strArray[i].length) {
             maxLength = strArray[i].length;
             longestItem = strArray[i];
         }
-
     }
     return longestItem;
 }
@@ -154,17 +153,17 @@ const findLongestWord = (str) => {
 // Вызовы функции для проверки
 console.log(
     findLongestWord("The quick brown fox jumped over the lazy dog")
-  ); // вернет 'jumped'
-  
-  console.log(
+); // вернет 'jumped'
+
+console.log(
     findLongestWord("Google do a roll")
-  ); // вернет 'Google'
-  
-  console.log(
+); // вернет 'Google'
+
+console.log(
     findLongestWord("May the force be with you")
-  ); // вернет 'force'
-  
-  
+); // вернет 'force'
+
+
 
 // ===================================== task 6 =============================
 console.log('==== task 6 ====');
@@ -174,22 +173,22 @@ console.log('==== task 6 ====');
   которая получает массив чисел numbers, и возвращает 
   самое большое число в массиве.
 */
- 
+
 const findLargestNumber = (numbers) => Math.max(...numbers);
 
 // Вызовы функции для проверки
 console.log(
     findLargestNumber([1, 2, 3])
-  ); // вернет 3
-  
-  console.log(
+); // вернет 3
+
+console.log(
     findLargestNumber([27, 12, 18, 5])
-  ); // вернет 27
-  
-  console.log(
+); // вернет 27
+
+console.log(
     findLargestNumber([31, 128, 14, 74])
-  ); // вернет 128
-  
+); // вернет 128
+
 // ===================================== task 7 =============================
 console.log('==== task 7 ====');
 
@@ -201,32 +200,61 @@ console.log('==== task 7 ====');
   и добавляет в массив uniqueNumbers только уникальные,
   а те которые в массиве уже есть игнорирует.
 */
-
-const uniqueNumbers  = [2, 1, 4, 9];
-const addUniqNumbers = () => {
-    const args = Array.from(arguments);
-    for(let i of uniqueNumbers){
-        
+/* 1. псевдомассив аргументс преобразовать в массив
+  2. при помощи цикла перебрать все елементы массива аргументс
+  3. проверить каждый элемент входит ли он в исходный массив
+  4. если не входит - пушим в массив
+*/
+const uniqueNumbers = [2, 1, 4, 9];
+const addUniqNumbers = (...args) => {
+    for (let item of args) {
+        if (uniqueNumbers.includes(item) === false) {
+            uniqueNumbers.push(item);
+        }
     }
 }
 // Вызовы функции для проверки
 addUniqNumbers(1, 2, 3);
 console.log(
-  uniqNumbers
+    uniqueNumbers
 ); // [2, 1, 4, 9, 3]
 
 addUniqNumbers(12, 2, 3, 19);
 console.log(
-  uniqNumbers
+    uniqueNumbers
 ); // [2, 1, 4, 9, 3, 12, 19]
 
 addUniqNumbers(4, 5, 12, 3, 1, 2, 8);
 console.log(
-  uniqNumbers
+    uniqueNumbers
 ); // [2, 1, 4, 9, 3, 12, 19, 5, 8]
 
 // ===================================== task 8 =============================
 console.log('==== task 8 ====');
 
-// ===================================== task 9 =============================
-console.log('==== task 9 ====');
+/*
+  Создайте функцию removeFromArray(arr), 
+  которая получает 1 параметр, исходный массив arr.
+  
+  При вызове функции, первым аргументом всегда будет массив чисел,
+  за которым следуют один или несколько аргументов, тоже чисел. 
+  
+  Удалите все элементы из исходного массива, 
+  которые имеют такое же значение, что и аргументы.
+*/
+const removeFromArray = (arr, ...args) => {
+    for (let item of args) {
+        if (arr.includes(item)) {
+            arr.splice((arr.indexOf(item)), 1);
+        }
+    }
+    return arr;
+}
+// Вызовы функции для проверки
+console.log(
+    removeFromArray([1, 2, 3, 4, 5], 2, 4)
+); // [1, 3, 5]
+
+console.log(
+    removeFromArray([12, 4, 3, 8, 17], 3, 29, 18, 4)
+); // [12, 8, 17]
