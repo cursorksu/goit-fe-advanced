@@ -14,21 +14,18 @@
   Убедитесь что функция работает верно.
  */
 const logins = ['admin', 'qweqwe', 'oksana', 'qwerty'];
-let isIncludes;
 const inputLogin = prompt("Для регистрации нового пользователя введите логин (от 4 до 16 символов)")
 
 const checkLoginValidity = login => (login.length >= 4 && login.length <= 16) ? true : false;
 
-const checkIfLoginExists = (logins, login) => isIncludes = logins.includes(login);
+const checkIfLoginExists = (logins, login) => logins.includes(login);
 
 function addLogin(logins, login) {
-  const isValidity = checkLoginValidity(inputLogin);
-  const isIncludes = checkIfLoginExists(logins, inputLogin);
-  if (!isValidity) {
+  if (!checkLoginValidity(inputLogin)) {
     console.log('Ошибка! Логин должен быть от 4 до 16 символов');
     return;
   }
-  if (isIncludes) {
+  if (checkIfLoginExists(logins, inputLogin)) {
     console.log('Такой логин уже используется!');
     return;
   }
