@@ -15,7 +15,8 @@
   Написанный класс должен соответствовать следующему jsDoc описанию. То есть класс должен содержать
   указанные методы, которые принимают и возвращают данные указанного типа.
 */
-
+// https://cursorksu.github.io/goit-fe-advanced/module_6/index.html - ссылка на страницу
+//https://github.com/cursorksu/goit-fe-advanced/tree/ff451907e22d585266409699f44ff1f170ff5a24/module_6 - репозиторий
 /**
  * Класс, объекты которого описывают параметры гамбургера.
  */
@@ -93,23 +94,12 @@ class Hamburger {
    *
    * Попробуйте сделать это геттером чтобы можно было обращаться как obj.price и нам вернет сумму.
    */
-  calculatePrice() {
-    let toppingPrice = 0;
-    const toppingsArr = this._toppings;
-    const arr = Object.entries(Hamburger.TOPPINGS);
-   
-    for(let j in toppingsArr){
-        for(let i in arr){
-            if(arr[i][0] === (toppingsArr[j])){
-                toppingPrice = toppingPrice + arr[i][1].price
-            }
-        }
-    }
-    const arrOrder = [Hamburger.SIZES[this._size], Hamburger.STUFFINGS[this._stuffing]];
-    let sumPrice = arrOrder.reduce((acc, obj) => acc + obj.price, 0) + toppingPrice;
-      
+  calculatePrice() {  
+   const toppingPrice = this._toppings.reduce((acc,cur) =>  (Hamburger.TOPPINGS[cur].price + acc), 0)
+   let sumPrice =  Hamburger.SIZES[this._size].price +  Hamburger.STUFFINGS[this._stuffing].price + toppingPrice;
+
     return sumPrice
-  }
+  } 
 
   /**
    * Узнать калорийность
@@ -117,23 +107,12 @@ class Hamburger {
    *
    * Попробуйте сделать это геттером чтобы можно было обращаться как obj.calories и нам вернет сумму.
    */
-  calculateCalories() {
-    let toppingCal = 0;
-    const toppingsArr = this._toppings;
-    const arr = Object.entries(Hamburger.TOPPINGS);
-   
-    for(let j in toppingsArr){
-        for(let i in arr){
-            if(arr[i][0] === (toppingsArr[j])){
-                toppingCal = toppingCal + arr[i][1].calories;
-            }
-        }
-    }
-    const arrOrder = [Hamburger.SIZES[this._size], Hamburger.STUFFINGS[this._stuffing]];
-    let sumCal = arrOrder.reduce((acc, obj) => acc + obj.calories, 0) + toppingCal;
-      
-    return sumCal
-  }
+calculateCalories() {  
+  const toppingCal = this._toppings.reduce((acc,cur) => (Hamburger.TOPPINGS[cur].calories + acc), 0);
+  let sumCal =  Hamburger.SIZES[this._size].calories +  Hamburger.STUFFINGS[this._stuffing].calories + toppingCal;
+
+   return sumCal
+ } 
 }
 /*
   Размеры, виды добавок и начинок объявите как статические поля класса.

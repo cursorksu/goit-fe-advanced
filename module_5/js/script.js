@@ -184,18 +184,12 @@ console.log(`=====ЗАДАНИЕ ПОВЫШЕННОЙ СЛОЖНОСТИ 1=====`
  * Получить массив всех скиллов всех пользователей (поле skills), при этом не должно быть
  * повторяющихся скиллов и они должны быть отсортированы в алфавитном порядке
  */
-/**const getAllSkills = arr => {
-  return  arr
+
+const getAllSkills = arr =>  arr
     .reduce((acc, user) => acc.concat(user.skills),[])
-    .filter((userSkills, elem) => userSkills.includes(elem) === true).sort();
-};**/
-function getAllSkills (array)
-{
-	return array.reduce((acc, user) => acc.concat(user.skills),[]).reduce(function (memo, item)
-	{
-		return (~ memo.indexOf(item) ? null : memo.push(item)), memo;
-	}, []).sort();
-};
+    .filter((skill, index, skills) => skills.indexOf(skill) === index)
+    .sort();
+
 console.log(getAllSkills(users));
 // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
 
