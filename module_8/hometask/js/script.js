@@ -1,4 +1,6 @@
 "use strict";
+
+//https://cursorksu.github.io/goit-fe-advanced/module_8/hometask/index.html
 /*
   Создайте компонент галлереи изображений следующего вида.
   
