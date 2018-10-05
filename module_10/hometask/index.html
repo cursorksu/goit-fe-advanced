@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Module-9</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="pop-up">
+        <div class="pop-up-inner">
+                <div class="btn-close"></div>
+                 <span></span>
+        </div>
+    </div>
+    <div class="loader-wrapper">
+        <div class="loader-circle"></div>
+        <div class="loader-bottom">LOADING</div>
+    </div>
+    <div class="wrapper top-wrap">
+         <form class="serch-form" action="#">
+            <div class="id-wrapper">
+                <input id = "id" class="input js-id">
+                <label class = "label" for="id">Введите id существующего пользователя</label>
+            </div>
+            <div class="new-user-wrapper hide">
+                <div>
+                   <input id = "name" class="input js-name">
+                    <label  class = "label" for="name">Введите имя пользователя</label> 
+                </div>
+                <div>
+                    <input id = "age" class="input js-age">
+                    <label  class = "label" for="age">Введите возваст пользвателя</label>
+                </div>
+            </div>
+            <div class="button-wrap">
+                <button type = "submit" class="btn js-search">Найти</button>
+                <button type = "submit" class="btn js-delete">Удалить</button>
+                <button type = "submit" class="btn js-put">Обновить</button>
+                <button type = "submit" class="btn js-add">Создать</button>
+                <button type = "submit" class="btn js-all">Показать Всех</button>
+            </div>
+        </form>
+        </div>
+        <div class="wrapper main-wrap">
+             <table class="users js-list">
+                 <thead>
+                    <tr class="t-head">
+                        <td class = "td td-id" width = "30%">id</td>
+                        <td class = "td td-name" width = "30%">Имя</td>
+                        <td class = "td td-age" width = "30%">Возраст</td>
+                    </tr>
+                 </thead>
+                 <tbody>
+                 </tbody>
+            </table>
+        </div>
+    <script src="js/script.js"></script>
+</body>
+</html> 
