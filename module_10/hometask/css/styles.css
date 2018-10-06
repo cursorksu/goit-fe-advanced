@@ -128,6 +128,12 @@ body.del-success .pop-up{
     color: #fff;
     transition: all 0.3s ease
 }
+.btn[disabled = 'disabled']{
+    opacity: 0.4;
+}
+.btn[disabled = 'disabled']:hover{
+    background: #d4d454;
+}
 .btn:hover{
     background: #525c04;
 }
