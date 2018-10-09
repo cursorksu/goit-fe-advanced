@@ -7,77 +7,6 @@
 body{
    margin: 0;
 }
-.btn-close{
-    width: 60px;
-    height: 60px;
-    top: 0;
-    right: 0;
-    position: absolute;
-}
-.btn-close:after{
-    content: '';
-    display: block;
-    width: 80%;
-    height: 2px;
-    background: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-}
-.btn-close::before{
-    content: '';
-    display: block;
-    width: 80%;
-    height: 2px;
-    background: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-.btn-close:hover::after,
-.btn-close:hover::before{
-    background: #525c04   
-}
-
-.pop-up{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 1100;
-    background: rgba(0,0,0,0.3);
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-.pop-up-inner{
-    position: relative;
-    
-    width: 40%;
-    height: 40%;
-    background: #d4d454;  ;
-    padding: 30px;
-    padding-top: 70px;
-    color: #525c04
-    text-align: center;
-    font-weight: 700;
-}
-
-.pop-up-inner span{
-    color: #525c04;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-body.del-success .pop-up{
-    display: flex;
-}
 .wrapper {
     max-width: 900px;
     margin: auto;
@@ -94,11 +23,11 @@ body.del-success .pop-up{
 .main-wrap {
     padding: 30px;
     padding-top: 220px;
-    background: #d4d454; 
+    background: #d4d454;  
     min-height: 100vh;  
 }
 .new-user-wrapper {
-
+    display: none;
 }
 .id-wraper {
     display: flex;
@@ -106,16 +35,12 @@ body.del-success .pop-up{
     min-height: 160px;
 }
 .new-user-wrapper{
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
-    align-items: center;
     margin-top: 30px;
 }
-.new-user-wrapper .btn{
-    margin-top: 0;
-}
 .new-user-wrapper > div{
-    flex-basis: 38%;
+    flex-basis: 48%;
 }
 .button-wrap{
     display: flex;
@@ -131,12 +56,6 @@ body.del-success .pop-up{
     margin-top: 30px;
     color: #fff;
     transition: all 0.3s ease
-}
-.btn[disabled = 'disabled']{
-    opacity: 0.4;
-}
-.btn[disabled = 'disabled']:hover{
-    background: #d4d454;
 }
 .btn:hover{
     background: #525c04;
@@ -271,6 +190,4 @@ body.del-success .pop-up{
       color: rgba(255,255,255,0.5);
     }
   }
-  .hide{
-    display: none;
- }
+  

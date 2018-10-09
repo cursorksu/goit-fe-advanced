@@ -25,9 +25,10 @@ const refs = {
   form: document.querySelector(".serch-form"),
   searchUser: document.querySelector(".js-search"),
   deleteUser: document.querySelector(".js-delete"),
-  putUser: document.querySelector(".js-put:not(.new)"),
-  putUserNew: document.querySelector(".js-put.new"),
+  putUser: document.querySelector(".js-put"),
   addUser: document.querySelector(".js-add"),
+  addNewUser: document.querySelector(".js-send-data"),
+  putNewUser: document.querySelector(".js-send-data-for-put"),
   allUsers: document.querySelector(".js-all"),
   listUsers: document.querySelector(".js-list tbody"),
   idUser: document.querySelector(".js-id"),
@@ -37,7 +38,7 @@ const refs = {
   popUpClose: document.querySelector(".pop-up-inner .btn-close"),
   idWrap: document.querySelector(".id-wrapper"),
   newWrap: document.querySelector(".new-user-wrapper"),
-  allButtons: document.querySelectorAll('.btn')
+  allButtons: document.querySelectorAll('.button-wrap .btn')
 }
 //=================================================================
 
@@ -77,28 +78,23 @@ const getUserById = function (e) {
 const putUserById = function (e) {
   e.preventDefault();
   let query = refs.idUser.value;
-  const name = prompt("Введите имя");
-  const age = prompt("Введите возраст");
-  console.log(age, name)
+  const name = refs.nameUser.value;
+  const age = refs.ageUser.value;
   refs.page.classList.add('show-loader');
-  try {
-    if (!query) {
-      refs.idUser.setAttribute('placeholder', "Заполните поле");
-      return;
-    } else {
-      refs.page.classList.add('show-loader');
-      putUserId(query, name, age)
-      refs.page.classList.remove('show-loader');
-      refs.form.reset();
-      refs.idUser.setAttribute('placeholder', '');
-    }
-  } catch (e) {
-    console.log(`Ошибочка вышла : ${e}`);
-  }
+  putUserId(query, name, age)
+  .then(item => {
+    putRow(query, item.name, item.age);
+    const text = `Пользователь\nс ID:${item.id}\nуспешно изменен.`
+    popUpShow(text)
+   });
+  refs.page.classList.remove('show-loader');
+  refs.form.reset();
   refs.newWrap.classList.add('hide');
+  removeDssabled();
 }
 
-const deleteUserById = function () {
+const deleteUserById = function (e) {
+  e.preventDefault();
   let query = refs.idUser.value;
   try {
     if (query === '') {
@@ -107,13 +103,20 @@ const deleteUserById = function () {
     } else {
       refs.page.classList.add('show-loader');
       deleteUserId(query)
-        .then(item => {
-          if (item.error !== []) {
-            refs.popUpInner.querySelector('span').textContent = `Пользователь с идентификатором ${query} успешно удален`
-          } else {
-            refs.popUpInner.querySelector('span').textContent = `Пользователь с идентификатором ${query} не найден`
-          }
+        .then(response => {
+          const text = `Пользователь с\nс ID:${query}\n не найден!`;
+          popUpShow(text);
+          if (response.ok) return response.json();
+          throw new Error(`Ошибочка вышла: ${response.statusText}`);
         })
+        .then(data => {
+          return data.data; 
+        })
+        .then(item => {
+          deleteRow(query);
+          const text = `Пользователь\nс ID:${item.id}\nуспешно удален.`
+          popUpShow(text)
+        });
       refs.page.classList.remove('show-loader');
       refs.page.classList.add('del-success');
     }
@@ -121,21 +124,54 @@ const deleteUserById = function () {
     console.log(`Ошибочка вышла : ${e}`);
   }
 }
+const sendDataForPut = function (e) {
+  e.preventDefault();
+  refs.newWrap.classList.remove('hide');
+  refs.putNewUser.classList.remove('hide')
+  refs.addNewUser.classList.add('hide')
+  addDssabled()
+}
+
+const sendData = function (e) {
+  e.preventDefault();
+  refs.newWrap.classList.remove('hide');
+  refs.idWrap.classList.add('hide');
+  refs.putNewUser.classList.add('hide')
+  refs.addNewUser.classList.remove('hide')
+  addDssabled()
+}
 
 const addUser = function (e) {
-  e.preventDefault();
-  const name = prompt("Введите имя");
-  const age = prompt("Введите возраст");
-  console.log(age, name)
-  refs.page.classList.add('show-loader');
-  addNewUser(name, age)
-    .then(item => {
-      refs.popUpInner.querySelector('span').textContent = `Пользователь ${name} успешно создан`;
-      getAllUsers();
-    });
-  refs.page.classList.remove('show-loader');
-  refs.form.reset();
-}
+    const name = refs.nameUser.value;
+    const age = refs.ageUser.value;
+    refs.page.classList.add('show-loader');
+    addNewUser(name, age)
+      .then(item => {
+          return item;
+      })
+      .then(response => {
+        const text = `Не удалось создать пользователя. Проверьте правильность заполнения формы`;
+        popUpShow(text);
+        if (response.ok) return response.json();
+        throw new Error(`Ошибочка вышла: ${response.statusText}`);
+      })
+      .then(data => {
+        return data.data;
+      })
+      .then(string => {
+        const text = `Пользователь ${name} успешно создан`;
+        popUpShow(text);
+        refs.listUsers.insertAdjacentHTML('beforeend', murkupHTMLResp(string));
+        return string
+      }
+      );
+    refs.page.classList.remove('show-loader');
+    refs.form.reset();
+    refs.idWrap.classList.remove('hide');
+    refs.newWrap.classList.add('hide');
+    removeDssabled();
+  }
+  
 
 const getAllUsers = () =>
   fetch("https://test-users-api.herokuapp.com/users", {
@@ -176,17 +212,30 @@ const getUserId = (query) =>
   });
 
 const putUserId = (query, name, age) =>
-  fetch(`https://test-users-api.herokuapp.com/${query}`, {
+  fetch(`https://test-users-api.herokuapp.com/users/${query}`, {
     method: 'PUT',
     body: JSON.stringify({
       name: `${name}`,
-      age: age
+      age:  `${age}`
     }),
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     }
+  })
+  .then(response => {
+    const text = `Не удалось обновить данные пользователя. Проверьте правильность заполнения формы`;
+    popUpShow(text);
+    if (response.ok) return response.json();
+    throw new Error(`Ошибочка вышла: ${response.statusText}`);
+  })
+  .then(data => {
+    return data.data;
+  })
+  .catch(error => {
+    console.log(`Ошибочка вышла : ${error}`);
   });
+  ;
 
 const addNewUser = (name, age) =>
   fetch('https://test-users-api.herokuapp.com/users', {
@@ -215,7 +264,6 @@ const deleteUserId = (query) =>
 const createTable = (items) => {
   return items.reduce((murkup, item) => murkup + murkupHTML(item), '');
 }
-
 const murkupHTML = (item) => {
   return `<tr>
           <td class = "td td-id" width = "30%">${item.id}</td>
@@ -223,35 +271,56 @@ const murkupHTML = (item) => {
           <td class = "td td-age" width = "30%">${item.age}</td>
         </tr>`;
 }
-
-const popUpClose = () => refs.page.classList.remove('del-success');
-// Эта функция должна удалять строку из таблички в интерфейсе
-//без перезагрузки страницы после того как сработает клик на кнопку Удалить
-//!Не работает
-const deletRow = (idCurrent) => {
-  refs.listUsers.querySelectorAll('.td-id');
-  console.log(refs.listUsers.querySelectorAll('.td-id'));
-  refs.listUsers.querySelectorAll('.td-id');
-  /*.forEach(item => {
-    console.log(`${item.textContent == idCurrent}: ${item.textContent}`)
-    if(item.textContent == idCurrent){
-        console.log(`Нашел! ${idCurrent}`)
-  }
-})*/
+const murkupHTMLResp = (item) => {
+  return `<tr>
+          <td class = "td td-id" width = "30%">${item._id}</td>
+          <td class = "td td-name" width = "30%">${item.name}</td>
+          <td class = "td td-age" width = "30%">${item.age}</td>
+        </tr>`;
+}
+const popUpShow = (text) => {
+  refs.page.classList.add('del-success')
+  refs.popUpInner.querySelector('span').textContent = text;
 };
-//Эта функция должна делать неактивными кнопки
-//Не работает
-const addDssabled = (button) => {
+const popUpClose = () => refs.page.classList.remove('del-success');
 
+const deleteRow = (idCurrent) => {
+ let id = Array.from(refs.listUsers.querySelectorAll('.td-id'));
+ const row = id.map(item => {
+    if(item.textContent === idCurrent.toLowerCase()){
+      item.closest('tr').classList.add('hide');
+    }
+  });
+};
+const putRow = (idCurrent, name, age) => {
+  let id = Array.from(refs.listUsers.querySelectorAll('.td-id'));
+  id.map(item => {
+     if(item.textContent === idCurrent.toLowerCase()){
+       item.closest('tr').innerHTML  = `
+       <td class = "td td-id" width = "30%">${idCurrent}</td>
+       <td class = "td td-name" width = "30%">${name}</td>
+       <td class = "td td-age" width = "30%">${age}</td>
+     `;
+     }
+   });
+ };
+
+
+const addDssabled = () => {
   refs.allButtons.forEach(item => item.setAttribute('disabled', 'disabled'));
-  console.log(button)
-  button.removeAttribute('disabled');
-  console.log(refs.allButtons);
 }
 
-refs.popUpClose.addEventListener('click', popUpClose);
-refs.allUsers.addEventListener('click', showAllUsers);
-refs.searchUser.addEventListener('click', getUserById);
-refs.deleteUser.addEventListener('click', deleteUserById);
-refs.putUser.addEventListener('click', putUserById);
-refs.addUser.addEventListener('click', addUser);
+const removeDssabled = () => {
+  refs.allButtons.forEach(item => item.removeAttribute('disabled'));
+}
+
+  refs.popUpClose.addEventListener('click', popUpClose);
+  refs.allUsers.addEventListener('click', showAllUsers);
+  refs.searchUser.addEventListener('click', getUserById);
+  refs.deleteUser.addEventListener('click', deleteUserById);
+
+  refs.addUser.addEventListener('click', sendData);
+  refs.addNewUser.addEventListener('click', addUser);
+
+  refs.putUser.addEventListener('click', sendDataForPut);
+  refs.putNewUser.addEventListener('click', putUserById);

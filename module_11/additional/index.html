@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Module-11</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<div id="root">
+
+</div>
+
+<ul class="coffee-list">
+
+</ul>
+
+<template id="coffee-item">
+        <li>
+            <h2>Title: {{name}} </h2>
+            <p>Volume: {{volumeGlass}}</p>
+            {{#if milk}}
+                <p>Milk</p>
+            {{else}}
+                <p>Not Milk</p>
+            {{/if}}
+            <ul>
+                {{#each traits}}
+                    <li>{{this}}</li>
+                {{/each}}
+            </ul>
+        </li>
+</template>
+
+<template id = "dihs-card">
+    <img src="{{src}}" alt="{{name}}">
+    <div class="contant">
+        <h2 class="title"><a href="{{src}}">{{title}}</a></h2>
+        <p class="descr">{{description}}</p>
+       <div class="footer">
+            <span class="price">{{price}}$</span>
+            {{if}}
+            <button class = "add-button">Add to order</button>
+            {{/if}}
+       </div>
+       {{unless}}
+            <p class="sold-out">Sold-out</p>
+       {{/unless}}
+
+    </div>
+
+</template>
+
+    <template id = "cat-template">
+        <div class="cat">
+            <img src = "{{img}}" alt="cat">
+            <h2>{{name}}</h2>
+            <p>age: {{age}}</p>
+        </div>
+    </template>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html> 
