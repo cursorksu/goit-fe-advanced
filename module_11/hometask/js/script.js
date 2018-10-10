@@ -120,37 +120,31 @@ const laptops = [
 const form =  document.querySelector('.js-form');
 const inputs = form.querySelectorAll('input');
 
-const filter = { 
+const filterObj = { 
   
-  create(e){
-    e.preventDefault()
+  createFilter(e){
+    e.preventDefault();
     const arr =  Array.from(inputs);
-   // arr.reduce((acc, input) => acc + (input.value = input.checked) , '' );
-    console.log( arr.map(input => {
-      const key = input.getAttribute('value');
-      const value = input.getAttribute('checked');
-      return this.key = value;
-    }))
+    arr.map(input => {
+      const key = input.value;
+      const value = input.checked;
+      this.key = value;
+
+      console.log( key,':',value);
+    })
+    console.log(this);
   },
 
   reset(){
-    this.size = [];
-    this.color = []; 
-    this.release_date = [];
-    console.log(`${this.size} - Size. \n ${this.color} - Color. \n ${this.release_date} - Release` )
+    e.preventDefault();
   }
 }
-
+console.log(filterObj);
 const list =  document.querySelector('.js-list');
 const sourse = document.querySelector('#product-card').innerHTML.trim();
 const tpl = Handlebars.compile(sourse);
-const marcup = laptops.reduce((acc, laptop) =>{
-  if(laptop.size == 17){
-    console.log(laptop.size)
-      acc + tpl(laptop)
-  }
-} , '');
+const marcup = laptops.reduce((acc, laptop) => acc + tpl(laptop), '');
 
 list.insertAdjacentHTML("afterBegin", marcup);
-form.addEventListener("submit", filter.create.bind(filter));
-form.addEventListener("reset", filter.reset.bind(filter))
+form.addEventListener("submit", filterObj.createFilter.bind(filterObj));
+form.addEventListener("reset", filterObj.reset.bind(filterObj))

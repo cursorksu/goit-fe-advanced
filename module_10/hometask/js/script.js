@@ -80,6 +80,11 @@ const putUserById = function (e) {
   let query = refs.idUser.value;
   const name = refs.nameUser.value;
   const age = refs.ageUser.value;
+  if(name == '' || age == ''){
+    const text = `Пользователь\nс ID:${query}\n не изменен. Проверьре правильность заполнения полей`
+    popUpShow(text)
+    return
+  }
   refs.page.classList.add('show-loader');
   putUserId(query, name, age)
   .then(item => {
@@ -161,7 +166,7 @@ const addUser = function (e) {
       .then(string => {
         const text = `Пользователь ${name} успешно создан`;
         popUpShow(text);
-        refs.listUsers.insertAdjacentHTML('beforeend', murkupHTMLResp(string));
+        refs.listUsers.insertAdjacentHTML('beforeend', murkupHTML(string));
         return string
       }
       );
@@ -266,14 +271,7 @@ const createTable = (items) => {
 }
 const murkupHTML = (item) => {
   return `<tr>
-          <td class = "td td-id" width = "30%">${item.id}</td>
-          <td class = "td td-name" width = "30%">${item.name}</td>
-          <td class = "td td-age" width = "30%">${item.age}</td>
-        </tr>`;
-}
-const murkupHTMLResp = (item) => {
-  return `<tr>
-          <td class = "td td-id" width = "30%">${item._id}</td>
+          <td class = "td td-id" width = "30%">${item.id||item._id}</td>
           <td class = "td td-name" width = "30%">${item.name}</td>
           <td class = "td td-age" width = "30%">${item.age}</td>
         </tr>`;
