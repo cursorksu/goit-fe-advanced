@@ -24,7 +24,6 @@
       после чего в нем рендерятся новые карточки товаров, соответствующих текущим критериям фильтра.
 */
 
-
 const laptops = [
   {
     size: 13,
@@ -119,32 +118,55 @@ const laptops = [
 ];
 const form =  document.querySelector('.js-form');
 const inputs = form.querySelectorAll('input');
+const filter = { size: [], color: [], release_date: [] }
 
-const filterObj = { 
-  
-  createFilter(e){
-    e.preventDefault();
-    const arr =  Array.from(inputs);
-    arr.map(input => {
-      const key = input.value;
-      const value = input.checked;
-      this.key = value;
+//функция получает массив объектов и  выбирает те, которые соответствуют переданому параметру выборки
 
-      console.log( key,':',value);
-    })
-    console.log(this);
-  },
+const getLaptopBySize = (arr, size) =>
+  arr.filter(produkt => produkt.size === size);
 
-  reset(){
-    e.preventDefault();
-  }
+const getLaptopByColor = (arr, color) =>
+  arr.filter(produkt => produkt.color === color);
+
+const getLaptopByRelease = (arr, date) =>
+  arr.filter(produkt => produkt.release_date === date);
+
+const filtrA = getLaptopBySize(laptops, filter.size);
+const filtrB = getLaptopByColor(filtrA, filter.color);
+const filtrC = getLaptopByRelease(filtrB, filter.release_date);
+
+function log(str){
+  console.log(str)
 }
-console.log(filterObj);
+
+const arrInputs = Array.from(inputs);
+const arrInputsName = arrInputs.map(input => input.name);
+const getChecked = function(e){
+  e.preventDefault();
+  
+  arrInputs.filter(input => input.checked).map(item => {
+      log(item.value, item.name)
+      if(item.name === 'size'){
+        filter.size.push(item.value)
+      };
+      if(item.name === 'color'){
+        filter.color.push(item.value)
+      };
+      if(item.name ==='release_date'){
+        filter.release_date.push(item.value)
+      }
+  })
+  log(filter)
+} 
+
+
+
 const list =  document.querySelector('.js-list');
 const sourse = document.querySelector('#product-card').innerHTML.trim();
 const tpl = Handlebars.compile(sourse);
 const marcup = laptops.reduce((acc, laptop) => acc + tpl(laptop), '');
-
 list.insertAdjacentHTML("afterBegin", marcup);
-form.addEventListener("submit", filterObj.createFilter.bind(filterObj));
-form.addEventListener("reset", filterObj.reset.bind(filterObj))
+
+//по нажатию на кнопк 2 события: формирование объекта ФИЛЬТР и Выборка нужных карточек из Списка товаров
+form.addEventListener("submit", getChecked);
+// form.addEventListener("reset", filterObj.reset.bind(filterObj));

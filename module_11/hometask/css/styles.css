@@ -79,6 +79,9 @@ body{
 .wrapper {
     max-width: 900px;
     margin: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    background: rgb(245, 188, 113)
     
 }
 
@@ -100,7 +103,7 @@ body{
     max-width: 100%;
 }
 .produkt-list .footer{
-    background: tan;
+    background: rgb(248, 205, 148);
     font-weight: 700;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding: 10px;
