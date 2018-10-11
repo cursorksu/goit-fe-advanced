@@ -118,7 +118,16 @@ const laptops = [
 ];
 const form =  document.querySelector('.js-form');
 const inputs = form.querySelectorAll('input');
-const filter = { size: [], color: [], release_date: [] }
+//Константы для рендера разметки
+const list =  document.querySelector('.js-list');
+const sourse = document.querySelector('#product-card').innerHTML.trim();
+const tpl = Handlebars.compile(sourse);
+
+const filter = { 
+  size: [], 
+  color: [], 
+  release_date: [],
+}
 
 //функция получает массив объектов и  выбирает те, которые соответствуют переданому параметру выборки
 
@@ -131,42 +140,88 @@ const getLaptopByColor = (arr, color) =>
 const getLaptopByRelease = (arr, date) =>
   arr.filter(produkt => produkt.release_date === date);
 
-const filtrA = getLaptopBySize(laptops, filter.size);
-const filtrB = getLaptopByColor(filtrA, filter.color);
-const filtrC = getLaptopByRelease(filtrB, filter.release_date);
 
 function log(str){
   console.log(str)
 }
 
-const arrInputs = Array.from(inputs);
-const arrInputsName = arrInputs.map(input => input.name);
+const resetFilter = () => {
+  filter.size = [];
+  filter.color = [];
+  filter.release_date = [];
+}
+
 const getChecked = function(e){
   e.preventDefault();
-  
+
+  const arrInputs = Array.from(inputs);
   arrInputs.filter(input => input.checked).map(item => {
-      log(item.value, item.name)
-      if(item.name === 'size'){
-        filter.size.push(item.value)
-      };
-      if(item.name === 'color'){
-        filter.color.push(item.value)
-      };
-      if(item.name ==='release_date'){
-        filter.release_date.push(item.value)
-      }
-  })
-  log(filter)
+    if(item.name === 'size'){
+      filter.size.push(item.value)
+    };
+    if(item.name === 'color'){
+      filter.color.push(item.value)
+    };
+    if(item.name ==='release_date'){
+      filter.release_date.push(item.value)
+    }
+  });
+  let result = filterBySize(filter.size, laptops, getLaptopBySize);
+  result = filterByColor(filter.color, result, getLaptopByColor);
+  result = filterBy(filter.release_date, result, getLaptopByRelease);
+  let ArrNew = [];
+  result.forEach(item => item.map(i => ArrNew.push(i)));
+  log('ArrNew:');
+  log(ArrNew);
+    // Разметка выборки
+    marcupHTML (ArrNew);
+    //  Очистка объекта фильтр
+    resetFilter ();
+} 
+
+const marcupHTML = (arr) => { 
+  const marcup = arr
+    .reduce((acc, laptop) => acc + tpl(laptop), '');
+    list.innerHTML = marcup;
+}
+const filterBySize = function(param, arr, fn){
+  if(!param.length) {
+    return arr;
+  }else{
+    const filterRezult = param.map(item => fn(arr, +item));
+    return filterRezult;
+  }
+  
+}  
+
+const filterByColor = function(param, arr, fn){
+  let ArrNew = [];
+  if(!param.length) {
+    return arr;
+  }else {
+    arr.forEach(item => item.map(i => ArrNew.push(i)));
+    const filterRezult = param.map(item => fn(ArrNew, item));
+    log('filterRezult color:');
+    log(filterRezult) ;
+    return filterRezult;
+  } 
+}  
+const filterBy = function(param, arr, fn){
+  let ArrNew = [];
+  if(!param.length) {
+    return arr;
+  }else {
+    arr.forEach(item => item.map(i => ArrNew.push(i)));
+    const filterRezult = param.map(item => fn(ArrNew, +item));
+    log('filterRezult data:');log(filterRezult) ;
+    return filterRezult;
+  }
 } 
 
 
-
-const list =  document.querySelector('.js-list');
-const sourse = document.querySelector('#product-card').innerHTML.trim();
-const tpl = Handlebars.compile(sourse);
-const marcup = laptops.reduce((acc, laptop) => acc + tpl(laptop), '');
-list.insertAdjacentHTML("afterBegin", marcup);
+//Первоначальная разметка
+ marcupHTML (laptops);
 
 //по нажатию на кнопк 2 события: формирование объекта ФИЛЬТР и Выборка нужных карточек из Списка товаров
 form.addEventListener("submit", getChecked);
-// form.addEventListener("reset", filterObj.reset.bind(filterObj));
+form.addEventListener("reset", resetFilter);
