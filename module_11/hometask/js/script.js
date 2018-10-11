@@ -129,18 +129,6 @@ const filter = {
   release_date: [],
 }
 
-//функция получает массив объектов и  выбирает те, которые соответствуют переданому параметру выборки
-
-const getLaptopBySize = (arr, size) =>
-  arr.filter(produkt => produkt.size === size);
-
-const getLaptopByColor = (arr, color) =>
-  arr.filter(produkt => produkt.color === color);
-
-const getLaptopByRelease = (arr, date) =>
-  arr.filter(produkt => produkt.release_date === date);
-
-
 function log(str){
   console.log(str)
 }
@@ -166,17 +154,12 @@ const getChecked = function(e){
       filter.release_date.push(item.value)
     }
   });
-  let result = filterBySize(filter.size, laptops, getLaptopBySize);
-  result = filterByColor(filter.color, result, getLaptopByColor);
-  result = filterBy(filter.release_date, result, getLaptopByRelease);
-  let ArrNew = [];
-  result.forEach(item => item.map(i => ArrNew.push(i)));
-  log('ArrNew:');
-  log(ArrNew);
+
+const newArray = filterItems(laptops, filter)
     // Разметка выборки
-    marcupHTML (ArrNew);
+    marcupHTML(newArray);
     //  Очистка объекта фильтр
-    resetFilter ();
+    resetFilter();
 } 
 
 const marcupHTML = (arr) => { 
@@ -184,40 +167,29 @@ const marcupHTML = (arr) => {
     .reduce((acc, laptop) => acc + tpl(laptop), '');
     list.innerHTML = marcup;
 }
-const filterBySize = function(param, arr, fn){
-  if(!param.length) {
-    return arr;
-  }else{
-    const filterRezult = param.map(item => fn(arr, +item));
-    return filterRezult;
-  }
-  
-}  
 
-const filterByColor = function(param, arr, fn){
-  let ArrNew = [];
-  if(!param.length) {
-    return arr;
-  }else {
-    arr.forEach(item => item.map(i => ArrNew.push(i)));
-    const filterRezult = param.map(item => fn(ArrNew, item));
-    log('filterRezult color:');
-    log(filterRezult) ;
-    return filterRezult;
-  } 
-}  
-const filterBy = function(param, arr, fn){
-  let ArrNew = [];
-  if(!param.length) {
-    return arr;
-  }else {
-    arr.forEach(item => item.map(i => ArrNew.push(i)));
-    const filterRezult = param.map(item => fn(ArrNew, +item));
-    log('filterRezult data:');log(filterRezult) ;
-    return filterRezult;
-  }
-} 
+const getLaptopBySize = (arr, sizes) =>
+arr.filter(produkt => sizes.length
+  ? sizes.some((size) => produkt.size == size)
+  : true);
 
+const getLaptopByColor = (arr, colors) =>
+  arr.filter(produkt => colors.length
+    ? colors.some((color) => produkt.color == color)
+    : true);
+
+const getLaptopByRelease = (arr, dates) =>
+  arr.filter(produkt => dates.length
+    ? dates.some((item) => produkt.release_date == item)
+    : true);
+
+const filterItems = (arr, options) => {
+  const filteredBySize = getLaptopBySize(arr, options.size)
+  const filteredByColor = getLaptopByColor(filteredBySize, options.color)
+  const filteredByRelease = getLaptopByRelease(filteredByColor, options.release_date)
+
+  return filteredByRelease
+}
 
 //Первоначальная разметка
  marcupHTML (laptops);
